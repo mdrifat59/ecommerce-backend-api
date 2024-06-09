@@ -1,11 +1,13 @@
+require('dotenv').config()
 const express = require('express')
 const app = express()
-const mongoose = require('mongoose'); 
+// const mongoose = require('mongoose'); 
+const dbConnection= require("./config/dbConfig")
 
 app.use(express.json())
-mongoose.connect('mongodb+srv://mdrifatulislam59:ON86VIVvkh1oAjSF@cluster0.2ckl6wm.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=Cluster0')
-  .then(() => console.log('Database Connected!'));
+
+ dbConnection()
  
- 
+//  console.log(process.env.USER_NAME);
 
 app.listen(3000)
