@@ -1,9 +1,14 @@
 const express = require("express")
 const _ = express.Router()
  const emailValidation = require("../../helpers/emailValidation")
+const passwordValidation = require('../../helpers/passwordValidation')
+
+
 _.get("/registration", function(req, res){
     res.send("done")
 })
+
+
 _.post("/registration", function(req, res){
     let {name,email,password} = req.body
      if(!name){
@@ -14,11 +19,16 @@ _.post("/registration", function(req, res){
         res.send("Password required")
      }else{
         if(email){
-            console.log(emailValidation(email));
             if(!emailValidation(email)){
                 return res.send("Valied Email Required")
-            }
-        }
+                }            
+            } 
+             if(password){
+                if(!passwordValidation(password)){
+                     return res.send("Minimum eight characters, at least one letter and one number") 
+                    }
+            } 
+            
         res.send("Done")
      }
 })
