@@ -1,6 +1,6 @@
 const express = require("express")
 const _ = express.Router()
- 
+ const emailValidation = require("../../helpers/emailValidation")
 _.get("/registration", function(req, res){
     res.send("done")
 })
@@ -13,6 +13,12 @@ _.post("/registration", function(req, res){
      }else if (!password){
         res.send("Password required")
      }else{
+        if(email){
+            console.log(emailValidation(email));
+            if(!emailValidation(email)){
+                return res.send("Valied Email Required")
+            }
+        }
         res.send("Done")
      }
 })
