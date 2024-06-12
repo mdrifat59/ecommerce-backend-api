@@ -1,36 +1,24 @@
 const express = require("express")
-const _ = express.Router()
- const emailValidation = require("../../helpers/emailValidation")
-const passwordValidation = require('../../helpers/passwordValidation')
+const _ = express.Router() 
+const registrationController = require("../../Controllers/registrationController")
 
 
-_.get("/registration", function(req, res){
-    res.send("done")
-})
+// _.get("/registration", function(req, res){
+//     res.send("done")
+// })
 
 
-_.post("/registration", function(req, res){
-    let {name,email,password} = req.body
-     if(!name){
-        res.send("Name required")
-     }else if(!email){
-        res.send("Email required")
-     }else if (!password){
-        res.send("Password required")
-     }else{
-        if(email){
-            if(!emailValidation(email)){
-                return res.send("Valied Email Required")
-                }            
-            } 
-             if(password){
-                if(!passwordValidation(password)){
-                     return res.send("Minimum eight characters, at least one letter and one number") 
-                    }
-            } 
-            
-        res.send("Done")
-     }
-})
+_.post("/registration", registrationController)
+
+// if(email){
+//    if(!emailValidation(email)){
+//        return res.send("Valied Email Required")
+//        }            
+//    } 
+//     if(password){
+//        if(!passwordValidation(password)){
+//             return res.send("Minimum eight characters, at least one letter and one number") 
+//            }
+//    } 
 
 module.exports = _ 
