@@ -1,6 +1,6 @@
 const express = require("express")
 const _ = express.Router() 
-const registrationController = require("../../Controllers/registrationController")
+ const registrationController = require ("../../Controllers/registrationController")
 
 
 // _.get("/registration", function(req, res){
@@ -21,4 +21,4 @@ _.post("/registration", registrationController)
 //            }
 //    } 
 
-module.exports = _ 
+module.exports = _ ;

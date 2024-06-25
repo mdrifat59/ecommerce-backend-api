@@ -1,28 +1,37 @@
 const User = require ("../model/userSchema")
-
-let registrationController = (req, res)=>{
+const bcrypt = require('bcrypt');
+let registrationController = async (req, res)=>{
     let {name,email,password} = req.body
-    if(!name){
-        res.send("Name required")
-     }else if(!email){
-        res.send("Email required")
-     }else if (!password){
-        res.send("Password required")
-     }else{
-        let user = new User({
-            name: name,
-            email: email,
-            password: password,
-        })
-
-        user.save()
-        
-        res.send({
-         name:user.name,
-         email:user.email,
-         password:user.password
-        })
-     }
+    let existingUser = await User.find({email:email}) 
+    if(existingUser.length == 0){
+        if(!name){
+            res.send("Name required")
+         }else if(!email){
+            res.send("Email required")
+         }else if (!password){
+            res.send("Password required")
+         }else{ 
+                bcrypt.hash(password, 10, function(err, hash) {
+                    let user = new User({
+                        name: name,
+                        email: email,
+                        password: hash,
+                    })
+            
+                    user.save()
+                    
+                    res.send({
+                     name:user.name,
+                     email:user.email,
+                     password:user.password
+                    })
+                }); 
+           
+         }
+    }else{
+        res.send("Email already exits")
+    }
+   
 }
 
 
