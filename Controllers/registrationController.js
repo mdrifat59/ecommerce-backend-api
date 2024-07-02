@@ -1,6 +1,8 @@
 const User = require ("../model/userSchema")
 const bcrypt = require('bcrypt');
 const nodemailer = require("nodemailer");
+const otpGenerator = require('otp-generator')
+
 let registrationController = async (req, res)=>{
     let {name,email,password} = req.body
     let existingUser = await User.find({email:email}) 
@@ -12,14 +14,20 @@ let registrationController = async (req, res)=>{
          }else if (!password){
             res.send("Password required")
          }else{ 
+
+          let otp =  otpGenerator.generate(10, { upperCaseAlphabets: false, specialChars: true });
                 bcrypt.hash(password, 10, async function(err, hash) {
                     let user = new User({
                         name: name,
                         email: email,
                         password: hash,
+                        otp: otp,
                     })
             
                     user.save()
+
+                 
+                   
 
                     const transporter = nodemailer.createTransport({
                         service:"gmail",
@@ -33,7 +41,7 @@ let registrationController = async (req, res)=>{
                         from: 'mdrifatulislam59@gmail.com', // sender address
                         to: "tapsinakter2012@gamil.com", // list of receivers
                         subject: "Varify Your Email", // Subject line 
-                        html: "<b>Hello world?</b>", // html body
+                        html:  `<div style="display: flex; width: 600px; height: 200px;"> <div style="width:50%; height: 100px;"> Please Verify your email by click this button <a href="https://www.figma.com/">Verify</a>${otp} </div></div>`, // html body
                       });
                     
                     res.send(user)
