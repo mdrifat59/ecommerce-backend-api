@@ -1,24 +1,12 @@
 const express = require("express")
 const _ = express.Router() 
  const registrationController = require ("../../Controllers/registrationController")
-
-
-// _.get("/registration", function(req, res){
-//     res.send("done")
-// })
-
+const otpController = require("../../Controllers/otpController")
+ 
 
 _.post("/registration", registrationController)
+_.post("/otpverify", otpController)
 
-// if(email){
-//    if(!emailValidation(email)){
-//        return res.send("Valied Email Required")
-//        }            
-//    } 
-//     if(password){
-//        if(!passwordValidation(password)){
-//             return res.send("Minimum eight characters, at least one letter and one number") 
-//            }
-//    } 
+ 
 
 module.exports = _ ;
