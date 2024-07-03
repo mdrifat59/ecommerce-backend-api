@@ -38,8 +38,8 @@ let registrationController = async (req, res)=>{
                       });
 
                       const info = await transporter.sendMail({
-                        from: 'mdrifatulislam59@gmail.com', // sender address
-                        to: "tapsinakter2012@gamil.com", // list of receivers
+                        from: process.env.BASE_EMAIL, // sender address
+                        to: email, // list of receivers
                         subject: "Varify Your Email", // Subject line 
                         html:  `<div style="display: flex; width: 600px; height: 200px;"> <div style="width:50%; height: 100px;"> Please Verify your email by click this button <a href="https://www.figma.com/">Verify</a>${otp} </div></div>`, // html body
                       });
